@@ -13,6 +13,7 @@ ImGUI project to demonstrate EagleVM capabilities
 Configure CXX and CC to be clang
 
 CC = clang.exe
+
 CXX = clang++.exe
 
 ## Build Step
