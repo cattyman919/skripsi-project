@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 
+#include "EagleVMStub/EagleVMStub.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -12,7 +13,7 @@ static void error_callback(int error, const char *description) {
   fprintf(stderr, "Error: %s\n", description);
 }
 
-int main() {
+int main(int, char *[]) {
   glfwSetErrorCallback(error_callback);
 
   if (!glfwInit())
@@ -25,8 +26,8 @@ int main() {
 
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-  GLFWwindow *window =
-      glfwCreateWindow(640, 480, "Todo Auth", NULL, NULL);
+  fnEagleVMBegin();
+  GLFWwindow *window = glfwCreateWindow(640, 480, "Todo Auth", NULL, NULL);
   if (!window) {
     glfwTerminate();
     exit(EXIT_FAILURE);
@@ -34,6 +35,7 @@ int main() {
 
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);
+  fnEagleVMEnd();
 
   // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
@@ -74,6 +76,5 @@ int main() {
 
   glfwDestroyWindow(window);
   glfwTerminate();
-
-  exit(EXIT_SUCCESS);
+  return 0;
 }

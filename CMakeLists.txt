@@ -9,7 +9,6 @@ project(skripsi VERSION 1.0
             LANGUAGES CXX
 )
 
-
 add_link_options(
     /DEBUG
     /INCREMENTAL:NO
@@ -23,16 +22,16 @@ set_target_properties(todo PROPERTIES
         OUTPUT_NAME "todo"
 )
 
-if (WIN32)
-  target_compile_definitions(todo PRIVATE   
+target_compile_definitions(todo PRIVATE   
        # Prevents Windows.h from adding unnecessary includes    
        WIN32_LEAN_AND_MEAN  
        # Prevents Windows.h from defining min/max as macros 
        NOMINMAX 
-       # define macro to change main to WinMain
-       main=WinMain
-    )   
-endif() 
+)   
+
+set_target_properties(todo PROPERTIES 
+    LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+)
 
 file(GLOB_RECURSE VAR_SOURCES CONFIGURE_DEPENDS src/main.cpp deps/*.cpp)
 
@@ -55,6 +54,7 @@ find_package(OpenGL REQUIRED)
 target_link_libraries(todo PRIVATE 
     glfw3
     OpenGL::GL
+    EagleVMStub
 )
 
 # Target: EagleVM

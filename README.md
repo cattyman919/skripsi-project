@@ -24,6 +24,7 @@ CC = %CC_MSVC%\
 CXX = %CXX_MSVC%
 
 ## Build Step
+use Developer Command Prompt for Visual Studio 2022
 
 ```
 mkdir bin | mkdir bin\pdb
@@ -32,3 +33,10 @@ ninja -C build
 cd bin
 todo.exe
 ```
+## FAQ
+
+Q: Why do i get compile error?\
+A: Make sure to use MSVC compiler only (EagleVM is only compatible with MSVC, not Clang or MinGW)
+
+Q: Why do i get linking error?\
+A: This error can have many causes such as lib not found, incorrect dll or lib files. The solution is to look closely in the CMakeLists.txt and the lib folder.
