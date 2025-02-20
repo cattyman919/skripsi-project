@@ -14,14 +14,14 @@ Configure Environment variables for CXX and CC to be MSVC
 
 CC_CLANG = clang.exe\
 CC_MINGW = gcc.exe\
-CC_MSVC = cl.exe\
+CC_MSVC = cl.exe
 
 CXX_CLANG = clang++.exe\
 CXX_MINGW = g++.exe\
-CXX_MSVC = cl.exe\
+CXX_MSVC = cl.exe
 
 CC = %CC_MSVC%\
-CXX = %CXX_MSVC%\
+CXX = %CXX_MSVC%
 
 ## Build Step
 
