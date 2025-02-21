@@ -1,33 +1,42 @@
-#include <GLFW/glfw3.h>
-
 #include "EagleVMStub/EagleVMStub.h"
+#include "GLFW/glfw3.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "login.h"
 
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
+struct WindowData {
+  bool ShowLoginWindow{true};
+  bool ShowTodoWindow{false};
+};
 
 static void error_callback(int error, const char *description) {
   fprintf(stderr, "Error: %s\n", description);
 }
 
-int main(int, char *[]) {
+int main() {
+
+  struct WindowData window_data;
+  std::string username{};
+  std::string password{};
+
   glfwSetErrorCallback(error_callback);
 
   if (!glfwInit())
     exit(EXIT_FAILURE);
 
+  // OpenGL3 config for GLFW
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+
+  // GLFW window config
+  glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-  fnEagleVMBegin();
-  GLFWwindow *window = glfwCreateWindow(640, 480, "Todo Auth", NULL, NULL);
+  GLFWwindow *window{glfwCreateWindow(640, 640, "Todo Auth", NULL, NULL)};
+
   if (!window) {
     glfwTerminate();
     exit(EXIT_FAILURE);
@@ -35,7 +44,6 @@ int main(int, char *[]) {
 
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);
-  fnEagleVMEnd();
 
   // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
@@ -50,13 +58,18 @@ int main(int, char *[]) {
                      // GLFW callbacks and chain to existing ones.
   ImGui_ImplOpenGL3_Init();
 
+  // Default ImGui Style & Fonts
+  ImGui::SetupImGuiStyle(io, true, 1);
+
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-    ImGui::ShowDemoWindow(); // Show demo window! :)
+
+    if (window_data.ShowLoginWindow)
+      Login::LoginWindow(&window_data.ShowLoginWindow, username, password);
 
     ImGui::Render();
     int display_w, display_h;

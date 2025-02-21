@@ -13,8 +13,9 @@ add_link_options(
     /DEBUG
     /INCREMENTAL:NO
 )
+
 # Target : Todo
-add_executable(todo WIN32)
+add_executable(todo)
 
 target_compile_features(todo PRIVATE cxx_std_17)
 set_target_properties(todo PROPERTIES 
@@ -22,21 +23,20 @@ set_target_properties(todo PROPERTIES
         OUTPUT_NAME "todo"
 )
 
-target_compile_definitions(todo PRIVATE   
-       # Prevents Windows.h from adding unnecessary includes    
-       WIN32_LEAN_AND_MEAN  
-       # Prevents Windows.h from defining min/max as macros 
-       NOMINMAX 
-)   
-
 set_target_properties(todo PROPERTIES 
     LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
 )
 
-file(GLOB_RECURSE VAR_SOURCES CONFIGURE_DEPENDS src/main.cpp deps/*.cpp)
+target_compile_definitions(todo PRIVATE
+  "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
+)
+
+file(GLOB VAR_SOURCES CONFIGURE_DEPENDS src/*.cpp)
+file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
 
 target_sources(todo PRIVATE
         ${VAR_SOURCES}
+        ${VAR_SOURCES_DEPS}
 )
 
 target_include_directories(todo PRIVATE
