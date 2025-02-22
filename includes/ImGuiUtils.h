@@ -1,7 +1,7 @@
 #pragma once
 
+#include "GLFW/glfw3.h"
 #include "imgui.h"
-#include <iostream>
 #include <string>
 #include <unordered_map>
 
@@ -16,6 +16,8 @@ enum FONT_SIZE {
 };
 
 namespace ImGui {
+
+inline GLFWwindow *window;
 inline std::unordered_map<int, ImFont *> fonts;
 
 inline void ReplaceStringInPlace(std::string &subject,

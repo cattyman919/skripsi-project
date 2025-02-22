@@ -15,7 +15,8 @@ void Login::LoginDialog(Authentication_Status status, bool *p_open = NULL) {
     break;
   }
 
-  MessageBoxW(NULL, name, (LPCWSTR)L"Login", flags);
+  MessageBoxW(glfwGetWin32Window(ImGui::window), name, (LPCWSTR)L"Login",
+              flags);
 
   if (p_open)
     *p_open = false;
