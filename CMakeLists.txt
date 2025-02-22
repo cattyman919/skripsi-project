@@ -23,9 +23,9 @@ set_target_properties(todo PROPERTIES
         OUTPUT_NAME "todo"
 )
 
-set_target_properties(todo PROPERTIES 
-    LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
-)
+# set_target_properties(todo PROPERTIES 
+#     LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+# )
 
 target_compile_definitions(todo PRIVATE
   "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
@@ -37,6 +37,7 @@ file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
 target_sources(todo PRIVATE
         ${VAR_SOURCES}
         ${VAR_SOURCES_DEPS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
 )
 
 target_include_directories(todo PRIVATE
@@ -60,6 +61,7 @@ target_link_libraries(todo PRIVATE
 # Target: EagleVM
 set(EagleVM_SOURCES
   "src/EagleVM/EagleVM.cpp"
+  "public/resources/EagleVM.rc"
 )
 
 add_executable(EagleVM)

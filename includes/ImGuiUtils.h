@@ -40,7 +40,7 @@ inline void TextCentered(const char *text) {
 
 inline void SetupImGuiStyle(ImGuiIO &io, bool bStyleDark_, float alpha_) {
   std::string font_path = XSTRING(SOURCE_ROOT);
-  font_path.append("\\fonts\\JetBrainsMono-Regular.ttf");
+  font_path.append("\\public\\fonts\\JetBrainsMono-Regular.ttf");
   ImGui::ReplaceStringInPlace(font_path, "/", "\\");
   ImGui::ReplaceStringInPlace(font_path, "\\", "\\\\");
 

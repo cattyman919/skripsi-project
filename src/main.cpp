@@ -5,6 +5,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "login.h"
+#include "stb_image.h"
 
 struct WindowData {
   bool ShowLoginWindow{true};
@@ -37,6 +38,13 @@ int main() {
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
   ImGui::window = glfwCreateWindow(640, 640, "Todo Auth", NULL, NULL);
+
+  GLFWimage images[1];
+  images[0].pixels = stbi_load("C:\\03_Code\\glfw\\public\\images\\sus.jpg",
+                               &images[0].width, &images[0].height, 0,
+                               4); // rgba channels
+  glfwSetWindowIcon(ImGui::window, 1, images);
+  stbi_image_free(images[0].pixels);
 
   if (!ImGui::window) {
     glfwTerminate();
