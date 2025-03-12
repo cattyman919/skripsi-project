@@ -85,7 +85,7 @@ void print_ir(const std::vector<ir::block_ptr> &blocks,
 }
 
 int main(int argc, char *argv[]) {
-  auto executable = argc > 1 ? argv[1] : "todo.exe";
+  auto executable = argc > 1 ? argv[1] : "auth.exe";
   auto parsing_type = argc > 2 ? argv[2] : nullptr;
 
   std::ifstream file(executable, std::ios::binary | std::ios::ate);

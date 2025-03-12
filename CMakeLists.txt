@@ -14,54 +14,47 @@ add_link_options(
     /INCREMENTAL:NO
 )
 
-# Target : Todo
-add_executable(todo)
+# Target : auth
+add_executable(auth)
 
-target_compile_features(todo PRIVATE cxx_std_17)
-set_target_properties(todo PROPERTIES 
+target_compile_features(auth PRIVATE cxx_std_17)
+set_target_properties(auth PROPERTIES 
         CXX_EXTENSIONS OFF
-        OUTPUT_NAME "todo"
+        OUTPUT_NAME "auth"
 )
 
-# set_target_properties(todo PROPERTIES 
+# set_target_properties(auth PROPERTIES 
 #     LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
 # )
 
-target_compile_definitions(todo PRIVATE
+target_compile_definitions(auth PRIVATE
   "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
 )
 
-file(GLOB VAR_SOURCES CONFIGURE_DEPENDS src/*.cpp)
-file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
+# file(GLOB VAR_SOURCES CONFIGURE_DEPENDS src/*.cpp)
+# file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
 
-target_sources(todo PRIVATE
-        ${VAR_SOURCES}
-        ${VAR_SOURCES_DEPS}
+target_sources(auth PRIVATE
+        src/console.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
 )
 
-target_include_directories(todo PRIVATE
+target_include_directories(auth PRIVATE
         includes
-        deps/imgui
-        deps/imgui/backends
 )
 
-target_link_directories(todo PRIVATE
+target_link_directories(auth PRIVATE
         "lib"
 )
 
-find_package(OpenGL REQUIRED)
-
-target_link_libraries(todo PRIVATE 
-    glfw3
-    OpenGL::GL
+target_link_libraries(auth PRIVATE 
     EagleVMStub
 )
 
 # Target: EagleVM
 set(EagleVM_SOURCES
-  "src/EagleVM/EagleVM.cpp"
-  "public/resources/EagleVM.rc"
+  src/EagleVM.cpp
+  public/resources/EagleVM.rc
 )
 
 add_executable(EagleVM)
@@ -93,29 +86,3 @@ get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} D
 if(NOT CMKR_VS_STARTUP_PROJECT)
 	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT EagleVM)
 endif()
-
-
-# Target: EagleVMSandbox
-set(EagleVMSandbox_SOURCES
-  "src/EagleVMSandbox/EagleVMSandbox.cpp"
-)
-
-add_executable(EagleVMSandbox)
-
-target_sources(EagleVMSandbox PRIVATE ${EagleVMSandbox_SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EagleVMSandbox_SOURCES})
-
-target_compile_features(EagleVMSandbox PRIVATE
-	cxx_std_23
-)
-target_include_directories(EagleVMSandbox PRIVATE
-        "includes"
-)
-
-target_link_libraries(EagleVMSandbox PRIVATE
-	EagleVMStub
-)
-target_link_directories(EagleVMSandbox
-    PRIVATE
-    "lib"
-)
