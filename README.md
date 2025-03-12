@@ -1,6 +1,8 @@
 # My Skripsi project
 
-ImGUI project to demonstrate EagleVM capabilities
+Project to demonstrate EagleVM capabilities
+- Console Auth Application to demonstrate how dificult it is to reverse-engineer using EagleVM
+- Performance Analysis using Quick Sort, File Size, Encryption
 
 ## Build Configuration 
 

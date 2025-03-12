@@ -1,5 +1,4 @@
 #include "EagleVMStub/EagleVMStub.h"
-#include <cstdio>
 #include <intrin.h>
 #include <iostream>
 #include <string>
@@ -23,4 +22,3 @@ int main(int, char *[]) {
   fnEagleVMEnd();
   return 0;
 }
-
