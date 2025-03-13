@@ -79,6 +79,30 @@ target_link_libraries(Sorting PRIVATE
     EagleVMStub
 )
 
+########### Target: Test ##############
+add_executable(Test)
+target_compile_features(Test PRIVATE cxx_std_17)
+set_target_properties(Test PROPERTIES 
+        CXX_EXTENSIONS OFF
+        OUTPUT_NAME "test"
+)
+
+target_sources(Test PRIVATE
+    src/test.cpp
+)
+
+target_include_directories(Test PRIVATE
+        "includes"
+)
+
+target_link_directories(Test PRIVATE
+        "lib"
+)
+
+target_link_libraries(Test PRIVATE
+    EagleVMStub
+)
+
 ########### Target: EagleVM_auth ##############
 set(EagleVM_auth_SOURCES
   src/EagleVM/EagleVM_auth.cpp
@@ -150,4 +174,40 @@ target_link_libraries(EagleVM_sorting PRIVATE
 get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
 if(NOT CMKR_VS_STARTUP_PROJECT)
   set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT EagleVM_sorting)
+endif()
+
+########### Target: EagleVM_test ##############
+set(EagleVM_test_SOURCES
+  src/EagleVM/EagleVM_test.cpp
+  public/resources/EagleVM.rc
+)
+
+add_executable(EagleVM_test)
+
+target_sources(EagleVM_test PRIVATE ${EagleVM_test_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EagleVM_test_SOURCES})
+
+target_compile_features(EagleVM_test PRIVATE
+	cxx_std_23
+)
+
+target_include_directories(EagleVM_test PRIVATE
+        "includes"
+        "deps"
+)
+
+target_link_directories(EagleVM_test PRIVATE
+        "lib"
+)
+
+target_link_libraries(EagleVM_test PRIVATE
+	EagleVMCore
+ 	Zycore
+	Zydis
+	spdlog
+)
+
+get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
+if(NOT CMKR_VS_STARTUP_PROJECT)
+  set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT EagleVM_test)
 endif()
