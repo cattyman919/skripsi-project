@@ -7,7 +7,7 @@
 #include <vector>
 #include <windows.h>
 
-/*#define USE_VL_MACRO*/
+#define USE_VL_MACRO
 #include "vxlib.h"
 
 #ifndef _WIN64
@@ -115,8 +115,7 @@ int main() {
   std::cout << "----------------------------------------\n";
 
   for (size_t size : sizes) {
-    auto [avgTime, stdDev] =
-        measureSortingTime(size, 10); // Explicitly passing 10 runs
+    auto [avgTime, stdDev] = measureSortingTime(size, 100);
     std::cout << size << "\t\t" << avgTime << "\t\t" << stdDev << std::endl;
   }
 

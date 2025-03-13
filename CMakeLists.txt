@@ -9,9 +9,53 @@ project(skripsi VERSION 1.0
             LANGUAGES CXX
 )
 
+find_package(OpenGL REQUIRED)
+
 add_link_options(
     /DEBUG
     /INCREMENTAL:NO
+)
+
+########### Target: App ##############
+add_executable(app)
+
+target_compile_features(app PRIVATE cxx_std_17)
+set_target_properties(app PROPERTIES 
+        CXX_EXTENSIONS OFF
+        OUTPUT_NAME "app"
+)
+
+set_target_properties(app PROPERTIES 
+    LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+)
+
+target_compile_definitions(app PRIVATE
+  "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
+)
+
+file(GLOB VAR_SOURCES CONFIGURE_DEPENDS src/ImGui/*.cpp)
+file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
+
+target_sources(app PRIVATE
+        ${VAR_SOURCES}
+        ${VAR_SOURCES_DEPS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
+)
+
+target_include_directories(app PRIVATE
+        includes
+        deps/imgui
+        deps/imgui/backends
+)
+
+target_link_directories(app PRIVATE
+        "lib"
+)
+
+target_link_libraries(app PRIVATE 
+    glfw3
+    OpenGL::GL
+    vxlib64
 )
 
 ########### Target: Auth ##############
@@ -23,16 +67,9 @@ set_target_properties(auth PROPERTIES
         OUTPUT_NAME "auth"
 )
 
-# set_target_properties(auth PROPERTIES 
-#     LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
-# )
-
 target_compile_definitions(auth PRIVATE
   "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
 )
-
-# file(GLOB VAR_SOURCES CONFIGURE_DEPENDS src/*.cpp)
-# file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
 
 target_sources(auth PRIVATE
         src/auth.cpp
