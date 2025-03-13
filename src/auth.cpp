@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdint.h>
 #include <stdio.h>
-#include <string>
 #include <windows.h>
 
 #define USE_VL_MACRO

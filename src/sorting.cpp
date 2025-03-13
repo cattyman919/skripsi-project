@@ -7,13 +7,13 @@
 #include <vector>
 #include <windows.h>
 
-#define USE_VL_MACRO
+/*#define USE_VL_MACRO*/
 #include "vxlib.h"
 
-#ifdef _WIN32
-#pragma comment(lib, "vxlib64.lib")
-#else
+#ifndef _WIN64
 #pragma comment(lib, "vxlib32.lib")
+#else
+#pragma comment(lib, "vxlib64.lib")
 #endif
 
 // Function to generate random vector of specified size

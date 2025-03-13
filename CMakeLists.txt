@@ -78,32 +78,3 @@ target_link_directories(Sorting PRIVATE
 target_link_libraries(Sorting PRIVATE
     vxlib64
 )
-
-########### Target: Test ##############
-set(Test_SOURCES
-  src/test.cpp
-  src/sdk.cpp
-)
-
-add_executable(Test)
-target_compile_features(Test PRIVATE cxx_std_17)
-set_target_properties(Test PROPERTIES 
-        CXX_EXTENSIONS OFF
-        OUTPUT_NAME "test"
-)
-
-target_sources(Test PRIVATE
-    ${Test_SOURCES}
-)
-
-target_include_directories(Test PRIVATE
-        "includes"
-)
-
-target_link_directories(Test PRIVATE
-        "lib"
-)
-
-target_link_libraries(Test PRIVATE
-    vxlib64
-)
