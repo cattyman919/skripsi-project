@@ -48,7 +48,7 @@ target_link_directories(auth PRIVATE
 )
 
 target_link_libraries(auth PRIVATE 
-    EagleVMStub
+    vxlib64
 )
 
 ########### Target: Sorting ##############
@@ -76,78 +76,34 @@ target_link_directories(Sorting PRIVATE
 )
 
 target_link_libraries(Sorting PRIVATE
-    EagleVMStub
+    vxlib64
 )
 
-########### Target: EagleVM_auth ##############
-set(EagleVM_auth_SOURCES
-  src/EagleVM/EagleVM_auth.cpp
-  public/resources/EagleVM.rc
+########### Target: Test ##############
+set(Test_SOURCES
+  src/test.cpp
+  src/sdk.cpp
 )
 
-add_executable(EagleVM_auth)
-
-target_sources(EagleVM_auth PRIVATE ${EagleVM_auth_SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EagleVM_auth_SOURCES})
-
-target_compile_features(EagleVM_auth PRIVATE
-	cxx_std_23
+add_executable(Test)
+target_compile_features(Test PRIVATE cxx_std_17)
+set_target_properties(Test PROPERTIES 
+        CXX_EXTENSIONS OFF
+        OUTPUT_NAME "test"
 )
 
-target_include_directories(EagleVM_auth PRIVATE
+target_sources(Test PRIVATE
+    ${Test_SOURCES}
+)
+
+target_include_directories(Test PRIVATE
         "includes"
-        "deps"
 )
 
-target_link_directories(EagleVM_auth PRIVATE
+target_link_directories(Test PRIVATE
         "lib"
 )
 
-target_link_libraries(EagleVM_auth PRIVATE
-	EagleVMCore
- 	Zycore
-	Zydis
-	spdlog
+target_link_libraries(Test PRIVATE
+    vxlib64
 )
-
-get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
-if(NOT CMKR_VS_STARTUP_PROJECT)
-  set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT EagleVM_auth)
-endif()
-
-
-########### Target: EagleVM_sorting ##############
-set(EagleVM_sorting_SOURCES
-  src/EagleVM/EagleVM_sorting.cpp
-  public/resources/EagleVM.rc
-)
-
-add_executable(EagleVM_sorting)
-
-target_sources(EagleVM_sorting PRIVATE ${EagleVM_sorting_SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EagleVM_sorting_SOURCES})
-
-target_compile_features(EagleVM_sorting PRIVATE
-	cxx_std_23
-)
-
-target_include_directories(EagleVM_sorting PRIVATE
-        "includes"
-        "deps"
-)
-
-target_link_directories(EagleVM_sorting PRIVATE
-        "lib"
-)
-
-target_link_libraries(EagleVM_sorting PRIVATE
-	EagleVMCore
- 	Zycore
-	Zydis
-	spdlog
-)
-
-get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
-if(NOT CMKR_VS_STARTUP_PROJECT)
-  set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT EagleVM_sorting)
-endif()

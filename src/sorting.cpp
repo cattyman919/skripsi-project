@@ -1,80 +1,124 @@
-#include "EagleVMStub/EagleVMStub.h"
+#include <chrono>
+#include <cmath>
 #include <iostream>
-using namespace std;
+#include <random>
+#include <stdint.h>
+#include <stdio.h>
+#include <vector>
+#include <windows.h>
 
-// function to swap elements
-void swap(int *a, int *b) {
-  int t = *a;
-  *a = *b;
-  *b = t;
+#define USE_VL_MACRO
+#include "vxlib.h"
+
+#ifdef _WIN32
+#pragma comment(lib, "vxlib64.lib")
+#else
+#pragma comment(lib, "vxlib32.lib")
+#endif
+
+// Function to generate random vector of specified size
+std::vector<int> generateRandomVector(size_t size) {
+  std::vector<int> vec(size);
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> dis(1, 1000000);
+
+  for (size_t i = 0; i < size; ++i) {
+    vec[i] = dis(gen);
+  }
+  return vec;
 }
 
-// function to print the array
-void printArray(int array[], int size) {
-  int i;
-  for (i = 0; i < size; i++)
-    cout << array[i] << " ";
-  cout << endl;
+// Function to calculate standard deviation
+double calculateStdDev(const std::vector<double> &times, double mean) {
+  double sum = 0.0;
+  for (double time : times) {
+    sum += std::pow(time - mean, 2);
+  }
+  return std::sqrt(sum / (times.size() - 1));
 }
 
-// function to rearrange array (find the partition point)
-int partition(int array[], int low, int high) {
+// Partition function modified for vectors
+int partition(std::vector<int> &arr, int low, int high) {
+  int pivot = arr[high];
+  int i = low - 1;
 
-  // select the rightmost element as pivot
-  int pivot = array[high];
-
-  // pointer for greater element
-  int i = (low - 1);
-
-  // traverse each element of the array
-  // compare them with the pivot
   for (int j = low; j < high; j++) {
-    if (array[j] <= pivot) {
-
-      // if element smaller than pivot is found
-      // swap it with the greater element pointed by i
+    if (arr[j] <= pivot) {
       i++;
-
-      // swap element at i with element at j
-      swap(&array[i], &array[j]);
+      std::swap(arr[i], arr[j]);
     }
   }
-
-  // swap pivot with the greater element at i
-  swap(&array[i + 1], &array[high]);
-
-  // return the partition point
-  return (i + 1);
+  std::swap(arr[i + 1], arr[high]);
+  return i + 1;
 }
 
-void quickSort(int array[], int low, int high) {
+// QuickSort modified for vectors
+void quickSort(std::vector<int> &arr, int low, int high) {
   if (low < high) {
-
-    // find the pivot element such that
-    // elements smaller than pivot are on left of pivot
-    // elements greater than pivot are on righ of pivot
-    int pi = partition(array, low, high);
-
-    // recursive call on the left of pivot
-    quickSort(array, low, pi - 1);
-
-    // recursive call on the right of pivot
-    quickSort(array, pi + 1, high);
+    int pivot_index = partition(arr, low, high);
+    quickSort(arr, low, pivot_index - 1);
+    quickSort(arr, pivot_index + 1, high);
   }
+}
+
+// Function to measure sorting time for a given size
+std::pair<double, double> measureSortingTime(size_t size, int runs = 10) {
+  std::vector<double> times;
+
+  for (int i = 0; i < runs; ++i) {
+    std::vector<int> data = generateRandomVector(size);
+
+    auto start = std::chrono::high_resolution_clock::now();
+    VL_CODE_FLATTENING_BEGIN;
+    quickSort(data, 0, data.size() - 1);
+    VL_CODE_FLATTENING_END;
+    auto stop = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> duration = stop - start;
+    times.push_back(duration.count());
+  }
+
+  // Calculate average
+  double sum = 0;
+  for (double time : times) {
+    sum += time;
+  }
+  double average = sum / times.size();
+
+  // Calculate standard deviation
+  double stdDev = calculateStdDev(times, average);
+
+  return {average, stdDev};
 }
 
 int main() {
-  fnEagleVMBegin();
-  int data[] = {8, 7, 6, 1, 0, 9, 2};
-  int n = sizeof(data) / sizeof(data[0]);
+  std::vector<size_t> sizes = {
+      100,     // Very small
+      1000,    // Small
+      5000,    // Small-medium
+      10000,   // Medium
+      50000,   // Medium-large
+      100000,  // Large
+      500000,  // Very large
+      1000000, // Million
+      1500000, // 1.5 million
+      2000000, // 2 million
+      2500000, // 2.5 million
+      3000000  // 3 million
+  };
 
-  cout << "Unsorted Array: \n";
-  printArray(data, n);
+  std::cout << std::fixed; // Set fixed decimal precision
+  std::cout.precision(2);
 
-  quickSort(data, 0, n - 1);
+  std::cout << "\nSize\t\tAvg Time (ms)\tStd Dev (ms)\n";
+  std::cout << "----------------------------------------\n";
 
-  cout << "Sorted array in ascending order: \n";
-  printArray(data, n);
-  fnEagleVMEnd();
+  for (size_t size : sizes) {
+    auto [avgTime, stdDev] =
+        measureSortingTime(size, 10); // Explicitly passing 10 runs
+    std::cout << size << "\t\t" << avgTime << "\t\t" << stdDev << std::endl;
+  }
+
   return 0;
 }

@@ -1,10 +1,21 @@
-#include "EagleVMStub/EagleVMStub.h"
-#include <intrin.h>
 #include <iostream>
+#include <stdint.h>
+#include <stdio.h>
 #include <string>
+#include <windows.h>
+
+#define USE_VL_MACRO
+#include "vxlib.h"
+
+#ifndef _WIN64
+#pragma comment(lib, "vxlib32.lib")
+#else
+#pragma comment(lib, "vxlib64.lib")
+#endif
 
 int main(int, char *[]) {
-  fnEagleVMBegin();
+
+  VL_VIRTUALIZATION_BEGIN;
 
   std::string correctPassword = "password123";
   std::string inputPassword;
@@ -17,8 +28,10 @@ int main(int, char *[]) {
   } else {
     std::cout << "Not authorized." << std::endl;
   }
+
+  VL_VIRTUALIZATION_END;
+
   system("pause");
 
-  fnEagleVMEnd();
   return 0;
 }
