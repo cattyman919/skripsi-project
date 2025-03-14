@@ -7,8 +7,7 @@
 #include <vector>
 #include <windows.h>
 
-#define USE_VL_MACRO
-#include "vxlib.h"
+#include "vxlang/vxlib.h"
 
 #ifndef _WIN64
 #pragma comment(lib, "vxlib32.lib")
@@ -70,9 +69,9 @@ std::pair<double, double> measureSortingTime(size_t size, int runs = 10) {
     std::vector<int> data = generateRandomVector(size);
 
     auto start = std::chrono::high_resolution_clock::now();
-    VL_CODE_FLATTENING_BEGIN;
+    VL_VIRTUALIZATION_BEGIN;
     quickSort(data, 0, data.size() - 1);
-    VL_CODE_FLATTENING_END;
+    VL_VIRTUALIZATION_END;
     auto stop = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double, std::milli> duration = stop - start;

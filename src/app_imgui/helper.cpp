@@ -1,4 +1,4 @@
-#include "helper.h"
+#include "app_imgui/helper.h"
 
 // Simple helper function to load an image into a OpenGL texture with common
 // settings
