@@ -13,8 +13,8 @@ project(skripsi VERSION 1.0
             LANGUAGES CXX
 )
 
-# set(USE_VL_MACRO 1)
-# add_compile_definitions(USE_VL_MACRO)
+set(USE_VL_MACRO 1)
+add_compile_definitions(USE_VL_MACRO)
 
 find_package(OpenGL REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
@@ -61,6 +61,7 @@ target_sources(app_imgui PRIVATE
 
 target_include_directories(app_imgui PRIVATE
         includes
+        deps
         deps/imgui
         deps/imgui/backends
 )
@@ -193,5 +194,42 @@ target_link_directories(QuickSort PRIVATE
 )
 
 target_link_libraries(QuickSort PRIVATE
+    vxlib64
+)
+
+########### Target: Encryption ##############
+
+add_executable(Encryption)
+target_compile_features(Encryption PRIVATE cxx_std_17)
+
+if(USE_VL_MACRO)
+  set_target_properties(Encryption PROPERTIES
+    CXX_EXTENSIONS OFF
+    OUTPUT_NAME "encryption_vm"
+)
+else()
+  set_target_properties(Encryption PROPERTIES
+    CXX_EXTENSIONS OFF
+    OUTPUT_NAME "encryption"
+)
+endif()
+
+target_sources(Encryption PRIVATE
+    src/performance/encryption.cpp
+    src/performance/aes.cpp
+)
+
+target_include_directories(Encryption PRIVATE
+        "includes"
+        deps
+)
+
+target_link_directories(Encryption PRIVATE
+        "lib"
+)
+
+target_link_libraries(Encryption PRIVATE
+    libssl
+    libcrypto
     vxlib64
 )
