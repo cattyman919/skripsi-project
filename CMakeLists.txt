@@ -13,8 +13,8 @@ project(skripsi VERSION 1.0
             LANGUAGES CXX
 )
 
-set(USE_VL_MACRO 1)
-add_compile_definitions(USE_VL_MACRO)
+# set(USE_VL_MACRO 1)
+# add_compile_definitions(USE_VL_MACRO)
 
 find_package(OpenGL REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
@@ -101,12 +101,6 @@ target_include_directories(app_qt PRIVATE
 
 target_link_directories(app_qt PRIVATE
         "lib"
-)
-
-set_target_properties(app_qt PROPERTIES
-    OUTPUT_NAME "app_qt"
-    WIN32_EXECUTABLE ON
-    MACOSX_BUNDLE ON
 )
 
 if(USE_VL_MACRO)
@@ -231,5 +225,39 @@ target_link_directories(Encryption PRIVATE
 target_link_libraries(Encryption PRIVATE
     libssl
     libcrypto
+    vxlib64
+)
+
+########### Target: Size ##############
+
+add_executable(Size)
+target_compile_features(Size PRIVATE cxx_std_17)
+
+if(USE_VL_MACRO)
+  set_target_properties(Size PROPERTIES
+    CXX_EXTENSIONS OFF
+    OUTPUT_NAME "size_vm"
+)
+else()
+  set_target_properties(Size PROPERTIES
+    CXX_EXTENSIONS OFF
+    OUTPUT_NAME "size"
+)
+endif()
+
+target_sources(Size PRIVATE
+    src/performance/size.cpp
+    src/performance/dummy.rc
+)
+
+target_include_directories(Size PRIVATE
+        "includes"
+)
+
+target_link_directories(Size PRIVATE
+        "lib"
+)
+
+target_link_libraries(Encryption PRIVATE
     vxlib64
 )

@@ -6,19 +6,33 @@ Project to demonstrate VxLang capabilities
     - ImGui Auth Application
     - Qt Auth Application
 - Performance Analysis: 
-    - Quick Sort
-    - Encryption
+    - Quick Sort (Run 100 times)
+    - Encryption (AES-256)
     - File Size
+
+## File Size Analysis
+I used fsutil to generate dummy bin file then embed it to the program. Example CLI to generate 100MB dummy bin file
+```
+fsutil file createnew dummy.bin 100000000
+```
+
+this data is then embed using .rc file
+```
+DUMMY_DATA RCDATA "dummy.bin"
+```
 
 ## Build Configuration 
 
+- Generator : CMake
+- Qt Version : 6.8.2 (MSVC2022_64)
+- OpenSSL Version: 3.4.0
 - Build System : Ninja 
 - Compiler: Clang (clang-cl which is compatible with MSVC)
 - Target : Win32
 
 ### Configuration Setup
 
-Configure Environment variables for CXX and CC to be MSVC
+Configure Environment variables for CXX and CC to be clang-cl
 
 CC = clang-cl\
 CXX = clang-cl
