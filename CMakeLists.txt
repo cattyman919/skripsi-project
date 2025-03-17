@@ -192,8 +192,6 @@ target_link_directories(console_cloud PRIVATE
 
 target_link_libraries(console_cloud PRIVATE 
     libcurl
-    libssl
-    libcrypto
     vxlib64
 )
 

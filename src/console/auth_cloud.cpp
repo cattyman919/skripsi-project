@@ -1,5 +1,6 @@
 #include <curl/curl.h>
 #include <iostream>
+#include <nlohmann/json.hpp> // Add JSON library
 #include <string>
 #include <windows.h>
 
@@ -10,6 +11,8 @@
 #pragma comment(lib, "vxlib64.lib")
 #endif
 #pragma comment(lib, "libcurl.lib")
+
+using json = nlohmann::json; // Namespace alias
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb,
                             void *userp) {
@@ -22,27 +25,37 @@ bool send_login_request(const std::string &username,
   CURL *curl;
   CURLcode res;
   std::string readBuffer;
-  std::string url = "http://localhost:8080/login";
+  std::string url = "http://localhost:9090/login";
 
-  std::string json =
-      "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+  try {
+    // Create JSON payload using the library
+    json payload;
+    payload["username"] = username;
+    payload["password"] = password;
 
-  curl = curl_easy_init();
-  if (curl) {
-    struct curl_slist *headers = nullptr;
-    headers = curl_slist_append(headers, "Content-Type: application/json");
+    std::string jsonStr = payload.dump();
 
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json.c_str());
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    curl = curl_easy_init();
+    if (curl) {
+      struct curl_slist *headers = nullptr;
+      headers = curl_slist_append(headers, "Content-Type: application/json");
 
-    res = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
-    curl_slist_free_all(headers);
+      curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+      curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+      curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonStr.c_str());
+      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+      curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 
-    return readBuffer.find("\"success\":true") != std::string::npos;
+      res = curl_easy_perform(curl);
+      curl_easy_cleanup(curl);
+      curl_slist_free_all(headers);
+
+      // Parse response using JSON library
+      json response = json::parse(readBuffer);
+      return response.value("success", false);
+    }
+  } catch (const json::exception &e) {
+    std::cerr << "JSON error: " << e.what() << std::endl;
   }
   return false;
 }
