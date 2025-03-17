@@ -155,6 +155,48 @@ target_link_libraries(console PRIVATE
     vxlib64
 )
 
+########### Target: Console_Cloud ##############
+add_executable(console_cloud)
+
+target_compile_features(console_cloud PRIVATE cxx_std_17)
+
+if(USE_VL_MACRO)
+set_target_properties(console_cloud PROPERTIES
+    CXX_EXTENSIONS OFF
+    OUTPUT_NAME "console_cloud_vm"
+)
+else()
+set_target_properties(console_cloud PROPERTIES
+    CXX_EXTENSIONS OFF
+    OUTPUT_NAME "console_cloud"
+)
+endif()
+
+target_compile_definitions(console_cloud PRIVATE
+  "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
+)
+
+target_sources(console_cloud PRIVATE
+        src/console/auth_cloud.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
+)
+
+target_include_directories(console_cloud PRIVATE
+        deps
+        includes
+)
+
+target_link_directories(console_cloud PRIVATE
+        "lib"
+)
+
+target_link_libraries(console_cloud PRIVATE 
+    libcurl
+    libssl
+    libcrypto
+    vxlib64
+)
+
 ########### Target: Quick_Sort ##############
 set(QUICKSORT_SOURCES
   src/performance/quick_sort.cpp
