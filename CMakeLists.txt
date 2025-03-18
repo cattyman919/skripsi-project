@@ -107,7 +107,7 @@ target_sources(app_imgui_cloud PRIVATE
         src/app_imgui/login_cloud.cpp
         src/app_imgui/helper.cpp
         ${VAR_SOURCES_DEPS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/cloud.rc
 )
 
 target_include_directories(app_imgui_cloud PRIVATE
@@ -144,7 +144,9 @@ target_sources(app_qt PRIVATE
         src/app_qt/src/todo.cpp
         src/app_qt/src/todo_auth.cpp
         ${APP_QT_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/qt.rc
 )
+
 qt_add_ui(app_qt SOURCES ${APP_QT_SOURCES_UI})
 
 target_link_libraries(app_qt PRIVATE Qt6::Widgets)
@@ -183,6 +185,7 @@ target_sources(app_qt_cloud PRIVATE
         src/app_qt/src/todo.cpp
         src/app_qt/src/todo_auth_cloud.cpp
         ${APP_QT_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/cloud.rc
 )
 qt_add_ui(app_qt_cloud SOURCES ${APP_QT_SOURCES_UI})
 
@@ -277,7 +280,7 @@ target_compile_definitions(console_cloud PRIVATE
 
 target_sources(console_cloud PRIVATE
         src/console/console_cloud.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/cloud.rc
 )
 
 target_include_directories(console_cloud PRIVATE
@@ -316,6 +319,7 @@ endif()
 
 target_sources(QuickSort PRIVATE
     ${QUICKSORT_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/array.rc
 )
 
 target_include_directories(QuickSort PRIVATE
@@ -350,6 +354,7 @@ endif()
 target_sources(Encryption PRIVATE
     src/performance/encryption.cpp
     src/performance/aes.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/encrypt.rc
 )
 
 target_include_directories(Encryption PRIVATE
@@ -387,6 +392,7 @@ endif()
 target_sources(Size PRIVATE
     src/performance/size.cpp
     src/performance/dummy.rc
+    ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/size.rc
 )
 
 target_include_directories(Size PRIVATE

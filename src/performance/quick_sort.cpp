@@ -54,11 +54,13 @@ int partition(std::vector<int> &arr, int low, int high) {
 
 // QuickSort modified for vectors
 void quickSort(std::vector<int> &arr, int low, int high) {
+  VL_VIRTUALIZATION_BEGIN;
   if (low < high) {
     int pivot_index = partition(arr, low, high);
     quickSort(arr, low, pivot_index - 1);
     quickSort(arr, pivot_index + 1, high);
   }
+  VL_VIRTUALIZATION_END;
 }
 
 // Function to measure sorting time for a given size
@@ -69,11 +71,8 @@ std::pair<double, double> measureSortingTime(size_t size, int runs = 10) {
     std::vector<int> data = generateRandomVector(size);
 
     auto start = std::chrono::high_resolution_clock::now();
-    VL_VIRTUALIZATION_BEGIN;
     quickSort(data, 0, data.size() - 1);
-    VL_VIRTUALIZATION_END;
     auto stop = std::chrono::high_resolution_clock::now();
-
     std::chrono::duration<double, std::milli> duration = stop - start;
     times.push_back(duration.count());
   }
@@ -92,20 +91,9 @@ std::pair<double, double> measureSortingTime(size_t size, int runs = 10) {
 }
 
 int main() {
-  std::vector<size_t> sizes = {
-      100,     // Very small
-      1000,    // Small
-      5000,    // Small-medium
-      10000,   // Medium
-      50000,   // Medium-large
-      100000,  // Large
-      500000,  // Very large
-      1000000, // Million
-      1500000, // 1.5 million
-      2000000, // 2 million
-      2500000, // 2.5 million
-      3000000  // 3 million
-  };
+  std::vector<size_t> sizes = {100,       1000,      5000,      10'000,
+                               50'000,    100'000,   500'000,   1'000'000,
+                               1'500'000, 2'000'000, 2'500'000, 3'000'000};
 
   std::cout << std::fixed; // Set fixed decimal precision
   std::cout.precision(2);
