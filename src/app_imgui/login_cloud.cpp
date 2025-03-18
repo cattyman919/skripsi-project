@@ -62,7 +62,8 @@ void Login::LoginWindow(bool *p_open, std::string &username,
 
     ImGui::SetNextItemShortcut(ImGuiKey_Enter);
     if (*p_open && ImGui::Button("Login", ImVec2(250, NULL))) {
-      if (send_login_request(username, password)) {
+      if (send_login_request(username, password,
+                             glfwGetWin32Window(ImGui::window))) {
         Login::LoginDialog(AUTH_SUCCESS, p_open);
       } else {
         Login::LoginDialog(AUTH_FAILED);

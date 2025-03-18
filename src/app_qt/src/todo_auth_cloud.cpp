@@ -32,7 +32,8 @@ void todo_auth::on_button_login_clicked() {
     return;
   }
 
-  if (send_login_request(username.toStdString(), password.toStdString())) {
+  if (send_login_request(username.toStdString(), password.toStdString(),
+                         HWND(QWidget::winId()))) {
     QMessageBox::information(this, "Login", "Authentication Sucess");
     hide();
     toDo = new todo();
