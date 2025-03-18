@@ -1,0 +1,19 @@
+########### 18 March 2025 ###########
+
+NOT VIRTUALIZED:
+quick_sort : 119 KB
+encryption : 131 KB 
+size       : 97,802 KB 
+console    : 105 KB
+app_imgui  : 1,773 KB
+app_qt     : 145 KB
+
+VIRTUALIZED:
+quick_sort : 1,951 KB
+encryption : 1,834 KB 
+size       : 112,716 KB 
+console    : 1,942 KB
+app_imgui  : 2,753 KB
+app_qt     : 1,954 KB
+
+##################################
