@@ -50,11 +50,12 @@ target_compile_definitions(app_imgui PRIVATE
   "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
 )
 
-file(GLOB VAR_SOURCES CONFIGURE_DEPENDS src/app_imgui/*.cpp)
 file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS deps/*.cpp)
 
 target_sources(app_imgui PRIVATE
-        ${VAR_SOURCES}
+        src/app_imgui/main.cpp
+        src/app_imgui/login.cpp
+        src/app_imgui/helper.cpp
         ${VAR_SOURCES_DEPS}
         ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
 )
@@ -76,6 +77,57 @@ target_link_libraries(app_imgui PRIVATE
     vxlib64
 )
 
+########### Target: App_ImGUI_Cloud ##############
+add_executable(app_imgui_cloud)
+
+target_compile_features(app_imgui_cloud PRIVATE cxx_std_17)
+
+if(USE_VL_MACRO)
+  set_target_properties(app_imgui_cloud PROPERTIES 
+        CXX_EXTENSIONS OFF
+        OUTPUT_NAME "app_imgui_cloud_vm"
+)
+else()
+set_target_properties(app_imgui_cloud PROPERTIES 
+        CXX_EXTENSIONS OFF
+        OUTPUT_NAME "app_imgui_cloud"
+)
+endif()
+
+set_target_properties(app_imgui_cloud PROPERTIES 
+    LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+)
+
+target_compile_definitions(app_imgui_cloud PRIVATE
+  "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
+)
+
+target_sources(app_imgui_cloud PRIVATE
+        src/app_imgui/main.cpp
+        src/app_imgui/login_cloud.cpp
+        src/app_imgui/helper.cpp
+        ${VAR_SOURCES_DEPS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
+)
+
+target_include_directories(app_imgui_cloud PRIVATE
+        includes
+        deps
+        deps/imgui
+        deps/imgui/backends
+)
+
+target_link_directories(app_imgui_cloud PRIVATE
+        "lib"
+)
+
+target_link_libraries(app_imgui_cloud PRIVATE 
+    glfw3
+    OpenGL::GL
+    vxlib64
+    libcurl
+)
+
 ########### Target: App_Qt ##############
 qt_add_executable(app_qt)
 
@@ -83,13 +135,15 @@ file(GLOB_RECURSE APP_QT_SOURCES_UI
     "src/app_qt/forms/*.ui"
 )
 
-file(GLOB_RECURSE APP_QT_SOURCES
+file(GLOB_RECURSE APP_QT_HEADERS
     "includes/app_qt/*.h"
-    "src/app_qt/src/*.cpp"
 )
 
 target_sources(app_qt PRIVATE
-        ${APP_QT_SOURCES}
+        src/app_qt/src/main.cpp
+        src/app_qt/src/todo.cpp
+        src/app_qt/src/todo_auth.cpp
+        ${APP_QT_HEADERS}
 )
 qt_add_ui(app_qt SOURCES ${APP_QT_SOURCES_UI})
 
@@ -117,6 +171,51 @@ set_target_properties(app_qt PROPERTIES
 )
 endif()
 
+########### Target: App_Qt_Cloud ##############
+qt_add_executable(app_qt_cloud)
+
+file(GLOB_RECURSE APP_QT_HEADERS
+    "includes/app_qt/*.h"
+)
+
+target_sources(app_qt_cloud PRIVATE
+        src/app_qt/src/main.cpp
+        src/app_qt/src/todo.cpp
+        src/app_qt/src/todo_auth_cloud.cpp
+        ${APP_QT_HEADERS}
+)
+qt_add_ui(app_qt_cloud SOURCES ${APP_QT_SOURCES_UI})
+
+
+
+target_include_directories(app_qt_cloud PRIVATE
+        deps
+        includes
+)
+
+target_link_directories(app_qt_cloud PRIVATE
+        "lib"
+)
+
+target_link_libraries(app_qt_cloud PRIVATE
+    libcurl
+    Qt6::Widgets
+)
+
+if(USE_VL_MACRO)
+set_target_properties(app_qt_cloud PROPERTIES
+    OUTPUT_NAME "app_qt_cloud_vm"
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
+)
+else()
+set_target_properties(app_qt_cloud PROPERTIES
+    OUTPUT_NAME "app_qt_cloud"
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
+)
+endif()
+
 ########### Target: Console ##############
 add_executable(console)
 
@@ -139,7 +238,7 @@ target_compile_definitions(console PRIVATE
 )
 
 target_sources(console PRIVATE
-        src/console/auth.cpp
+        src/console/console.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
 )
 
@@ -177,7 +276,7 @@ target_compile_definitions(console_cloud PRIVATE
 )
 
 target_sources(console_cloud PRIVATE
-        src/console/auth_cloud.cpp
+        src/console/console_cloud.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/public/resources/app.rc
 )
 
