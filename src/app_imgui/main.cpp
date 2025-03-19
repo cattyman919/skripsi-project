@@ -38,13 +38,6 @@ int main() {
 
   ImGui::window = glfwCreateWindow(640, 640, "Todo Auth", NULL, NULL);
 
-  GLFWimage images[1];
-  images[0].pixels = stbi_load("C:\\03_Code\\glfw\\public\\images\\sus.jpg",
-                               &images[0].width, &images[0].height, 0,
-                               4); // rgba channels
-  glfwSetWindowIcon(ImGui::window, 1, images);
-  stbi_image_free(images[0].pixels);
-
   if (!ImGui::window) {
     glfwTerminate();
     exit(EXIT_FAILURE);
