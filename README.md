@@ -31,20 +31,20 @@ DUMMY_DATA RCDATA "dummy.bin"
 - Compiler: clang-cl (compatible with MSVC)
 - Target : Win32
 
-### Configuration Setup
+### Environment Variables Setup
 
-Configure Environment variables for CXX and CC to be clang-cl
-
-CC = clang-cl\
-CXX = clang-cl
+- CC = clang-cl
+- CXX = clang-cl
+- CMAKE_PREFIX_PATH = C:\Qt\6.8.3\msvc2022_64
+- CMAKE_GENERATOR = Ninja
 
 ## Build Step
 use Developer Command Prompt for Visual Studio 2022 (Optional, not necessary with clang-cl)
 
+Terminal : Command Prompt
+
 ```
-mkdir bin | mkdir bin\pdb
-cmake -B build
-ninja -C build
+make build
 ```
 ## FAQ
 
