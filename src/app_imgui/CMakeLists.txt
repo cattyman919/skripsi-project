@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 
 set(TARGET_NAME "app_imgui")
 
+find_package(OpenGL REQUIRED)
+
 include_directories(${TARGET_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/deps
     ${CMAKE_SOURCE_DIR}/deps/imgui

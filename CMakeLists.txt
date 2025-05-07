@@ -16,9 +16,6 @@ project(skripsi VERSION 1.0
 # set(USE_VL_MACRO 1)
 # add_compile_definitions(USE_VL_MACRO)
 
-find_package(OpenGL REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
-
 link_directories(
     ${CMAKE_SOURCE_DIR}/lib
 )

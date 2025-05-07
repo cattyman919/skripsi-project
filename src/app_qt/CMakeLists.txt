@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 
 set(TARGET_NAME "app_qt")
 
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
 include_directories(
     ${CMAKE_SOURCE_DIR}/deps
 )
