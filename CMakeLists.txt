@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.31)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "")
@@ -34,3 +34,5 @@ add_subdirectory(src/app_imgui)
 add_subdirectory(src/app_qt)
 add_subdirectory(src/console)
 add_subdirectory(src/performance)
+add_subdirectory(src/Lilith/client)
+add_subdirectory(src/Lilith/server)

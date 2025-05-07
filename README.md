@@ -53,3 +53,8 @@ A: Make sure to use clang-cl compiler only (VxLang is only compatible with MSVC,
 
 Q: Why do i get linking error?\
 A: This error can have many causes such as lib not found, incorrect dll or lib files. The solution is to look closely in the CMakeLists.txt and the lib folder. Other reasons, might be becauses the correct version of MSVC or Qt is not installed.
+
+
+## References
+
+- [Lilith RAT](https://github.com/werkamsus/Lilith)

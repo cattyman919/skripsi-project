@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.8)
-
 set(TARGET_NAME "console")
 
 include_directories(${TARGET_NAME} PRIVATE
