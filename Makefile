@@ -7,5 +7,8 @@ build:
 	@echo "Compiling \& Linking Project..."
 	ninja -C build
 
+cloud: build
+	docker-compose --project-directory "server" up -d 
+
 clean:
 	rd /s /q build
