@@ -16,8 +16,16 @@
 
 #include "general.h"
 
+#include "vxlang/vxlib.h"
+
+#ifndef _WIN64
+#pragma comment(lib, "vxlib32.lib")
+#else
+#pragma comment(lib, "vxlib64.lib")
+#endif
 
 #if _DEBUG
+
 //TESTFUNC
 
 void testMB(std::string s)		//TEST FUNCTION
@@ -39,7 +47,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		return 0;
 
 
+  VL_VIRTUALIZATION_BEGIN;
 	Client MyClient(Settings::serverIP, Settings::serverPort); //Client
+  VL_VIRTUALIZATION_END;
 
 	while (true)
 	{
