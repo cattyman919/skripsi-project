@@ -1,3 +1,6 @@
 file(GLOB_RECURSE SOURCES "*.cpp")
 
-add_executable(Lilith_Server ${SOURCES})
+set(TARGET_NAME "Lilith_Server")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${TARGET_NAME}")
+
+add_executable(${TARGET_NAME} ${SOURCES})

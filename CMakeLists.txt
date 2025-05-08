@@ -11,8 +11,8 @@ project(skripsi VERSION 1.0
             LANGUAGES CXX
 )
 
-# set(USE_VL_MACRO 1)
-# add_compile_definitions(USE_VL_MACRO)
+set(USE_VL_MACRO 1)
+add_compile_definitions(USE_VL_MACRO)
 
 link_directories(
     ${CMAKE_SOURCE_DIR}/lib

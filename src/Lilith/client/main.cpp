@@ -40,6 +40,7 @@ void testMB(std::string s)		//TEST FUNCTION
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)	//main function
 {
 	//VARIABLE SETUP
+  VL_VIRTUALIZATION_BEGIN;
 	General::lpArguments = lpCmdLine;
 
 
@@ -47,16 +48,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		return 0;
 
 
-  VL_VIRTUALIZATION_BEGIN;
 	Client MyClient(Settings::serverIP, Settings::serverPort); //Client
   VL_VIRTUALIZATION_END;
 
 	while (true)
 	{
-
-
-
-
 		if (!MyClient.connected)
 		{
 			while (!MyClient.Connect())

