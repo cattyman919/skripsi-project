@@ -1,14 +1,17 @@
 # My Skripsi project
 
 Project to demonstrate VxLang capabilities
-- Authentication to demonstrate how dificult it is to reverse-engineer using VxLang:
+- Authentication to demonstrate how dificult it is to reverse-engineer using VxLang (with & without cloud):
     - Console Auth Application
     - ImGui Auth Application
     - Qt Auth Application
+
 - Performance Analysis: 
     - Quick Sort (Run 100 times)
     - Encryption (AES-256)
     - File Size
+
+- Case Study: Lilith RAT Analysis
 
 ## File Size Analysis
 I used fsutil to generate dummy bin file then embed it to the program. Example CLI to generate 100MB dummy bin file
@@ -37,6 +40,7 @@ DUMMY_DATA RCDATA "dummy.bin"
 - CXX = clang-cl
 - CMAKE_PREFIX_PATH = C:\Qt\6.8.3\msvc2022_64
 - CMAKE_GENERATOR = Ninja
+- PATH = C:\Qt\6.8.3\msvc2022_64\bin;%PATH% (add Qt bin folder to PATH environment)
 
 ## Build Step
 use Developer Command Prompt for Visual Studio 2022 (Optional, not necessary with clang-cl)
