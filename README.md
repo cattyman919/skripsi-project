@@ -50,6 +50,12 @@ Terminal : Command Prompt
 ```
 make build
 ```
+
+## Release Mode (Qt Application)
+This will have the necessary dependencies for qt application to the directory. (This is not required in debug mode)
+```
+windeployqt app_qt.exe
+```
 ## FAQ
 
 Q: Why do i get compile error?\
