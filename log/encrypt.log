@@ -2,9 +2,55 @@
 
 NOT VIRTUALIZED:
 
+Benchmarking AES-CBC-256 with 1000000 blocks of 1024 bytes each
+Total data size: 976 MB
+
+Processed 1000000/1000000 blocks (100.0%)
+All 1000000 blocks processed successfully.
+
+--- Results ---
+Total time:
+  Encryption: 1878519.60 us (1878.52 ms)
+  Decryption: 1304754.80 us (1304.75 ms)
+
+Average time per block:
+  Encryption: 1.88 us (0.00 ms)
+  Decryption: 1.30 us (0.00 ms)
+
+Total average time (encryption + decryption):
+  Per block: 3.18 us (0.00 ms)
+  Overall: 3183274.40 us (3183.27 ms)
+
+Throughput:
+  Encryption: 519.86 MB/s
+  Decryption: 748.46 MB/s
+  Combined: 634.16 MB/s (average)
 
 VIRTUALIZED:
 
+Benchmarking AES-CBC-256 with 1000000 blocks of 1024 bytes each
+Total data size: 976 MB
+
+Processed 1000000/1000000 blocks (100.0%)
+All 1000000 blocks processed successfully.
+
+--- Results ---
+Total time:
+  Encryption: 9330731.70 us (9330.73 ms)
+  Decryption: 8649742.60 us (8649.74 ms)
+
+Average time per block:
+  Encryption: 9.33 us (0.01 ms)
+  Decryption: 8.65 us (0.01 ms)
+
+Total average time (encryption + decryption):
+  Per block: 17.98 us (0.02 ms)
+  Overall: 17980474.30 us (17980.47 ms)
+
+Throughput:
+  Encryption: 104.66 MB/s
+  Decryption: 112.90 MB/s
+  Combined: 108.78 MB/s (average)
 
 ##################################
 

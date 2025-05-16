@@ -1,29 +1,39 @@
 BUILD_TYPE ?= Release
-
 BUILD_DIR = build
+CMAKE_CACHE_FILE = $(BUILD_DIR)/CMakeCache.txt
 
-NON_VM_TARGETS = app_imgui app_imgui_cloud app_qt app_qt_cloud console console_cloud quick_sort encryption size Lilith_Server
-VM_TARGETS = app_imgui_vm app_imgui_cloud_vm app_qt_vm app_qt_cloud_vm console_vm console_cloud_vm quick_sort_vm encryption_vm size_vm Lilith_Client_vm
+.PHONY: all build cloud clean help configure dummy rebuild_vm add_deps_executables virtualize
 
-.PHONY: all build build_vm_executables build_vm cloud clean help configure dummy rebuild_vm
-
-all: build build_vm
+all: build
 
 configure: dummy
-	@echo "Configuring Build System (Unified)..."
-	cmake -B $(BUILD_DIR) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -G Ninja
+	@echo "Checking configuration status..."
+	@IF NOT EXIST "$(CMAKE_CACHE_FILE)" ( \
+		echo Initial configuration or CMakeCache.txt missing... & \
+		echo Configuring Build System ... & \
+		cmake -B $(BUILD_DIR) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -G Ninja \
+	) else ( \
+		echo CMakeCache.txt found, skipping explicit CMake run. Ninja will re-run if needed. \
+	)
 
 build: configure
-	@echo "Compiling & Linking Non-Virtualized Build..."
-	ninja -C $(BUILD_DIR) $(NON_VM_TARGETS)
+	@echo "Compiling & Linking..."
+	ninja -C $(BUILD_DIR) 
+	$(MAKE) add_deps_executables
+	$(MAKE) virtualize
 
-build_vm_executables: configure
-	@echo "Compiling & Linking Virtualized Build Executables..."
-	ninja -C $(BUILD_DIR) $(VM_TARGETS)
-
-build_vm: build_vm_executables
+virtualize: 
 	@echo "Running VxLang on virtualized executables..."
 	virtualize.bat 
+
+add_deps_executables: 
+	@echo "Adding the required dependencies for executables"
+	@IF NOT EXIST bin\\console\\$(BUILD_TYPE)\\libcurl.dll (COPY dll\\libcurl.dll bin\\console\\$(BUILD_TYPE))
+	@IF NOT EXIST bin\\app_imgui\\$(BUILD_TYPE)\\libcurl.dll (COPY dll\\libcurl.dll bin\\app_imgui\\$(BUILD_TYPE))
+	@IF NOT EXIST bin\\app_qt\\$(BUILD_TYPE)\\libcurl.dll (COPY dll\\libcurl.dll bin\\app_qt\\$(BUILD_TYPE))
+ifeq ($(BUILD_TYPE), Release)
+	@IF NOT EXIST bin\\app_qt\\$(BUILD_TYPE)\\Qt6Core.dll (windeployqt bin\\app_qt\\Release)
+endif
 
 rebuild_vm: 
 	@echo "Re-running VxLang on existing virtualized executables..."
@@ -58,8 +68,6 @@ help:
 	@echo.
 	@echo 'make [BUILD_TYPE=Debug|Release]   build all non-VM and VM targets (VMs processed by vxlang)'
 	@echo 'make build                        build only non-VM targets'
-	@echo 'make build_vm_executables         build only VM target executables (before vxlang)'
-	@echo 'make build_vm                     build VM target executables and run vxlang'
 	@echo 'make rebuild_vm                   re-run vxlang on existing VM executables'
 	@echo 'make cloud                        run cloud as docker container'
 	@echo 'make clean                        remove any generated files'

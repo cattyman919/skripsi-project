@@ -2,29 +2,29 @@
 
 NOT VIRTUALIZED:
 
-quick_sort : KB
-encryption : KB
-size       :  KB 
-console    : KB
-console_cloud : KB
-app_imgui  :  KB
-app_imgui_cloud :  KB
-app_qt     : KB 
-app_qt_cloud  : KB
-Lilith_Client : KB
+quick_sort : 98 KB
+encryption : 110 KB
+size       : 97,771 KB 
+console    : 92 KB
+console_cloud : 281 KB
+app_imgui  : 1,675 KB
+app_imgui_cloud : 2,413 KB
+app_qt     : 122 KB 
+app_qt_cloud  : 315 KB
+Lilith_Client : 84 KB
 
 VIRTUALIZED:
 
-quick_sort :  KB
-encryption :  KB
-size       :  KB 
-console    :  KB
-console_cloud :  KB
-app_imgui  :  KB
-app_imgui_cloud :  KB
-app_qt     :  KB
-app_qt_cloud  :  KB
-Lilith_Client :  KB
+quick_sort : 1,537 KB
+encryption : 1,507 KB
+size       : 112,324 KB 
+console    : 1,577 KB
+console_cloud : 1,695 KB
+app_imgui  : 2,330 KB
+app_imgui_cloud : 2,418 KB
+app_qt     : 1,578 KB
+app_qt_cloud  : 1,671 KB
+Lilith_Client : 1,554 KB
 
 ##################################
 

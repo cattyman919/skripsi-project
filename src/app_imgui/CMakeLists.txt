@@ -8,9 +8,7 @@ include_directories(PRIVATE
 
 # Shared ImGui sources (compiled once per executable effectively, or put in a static lib)
 file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/deps/imgui/*.cpp"
-    "${CMAKE_SOURCE_DIR}/deps/imgui/backends/imgui_impl_glfw.cpp"
-    "${CMAKE_SOURCE_DIR}/deps/imgui/backends/imgui_impl_opengl3.cpp"
+    "${CMAKE_SOURCE_DIR}/deps/*.cpp"
 )
 # If you want to ensure ImGui is compiled truly once, make it a static library:
 # add_library(imgui_custom STATIC ${VAR_SOURCES_DEPS})
