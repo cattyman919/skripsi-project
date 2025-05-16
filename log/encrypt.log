@@ -1,5 +1,14 @@
+########### 16 May 2025 (Release Build) ###########
 
-########### 18 March 2025 ###########
+NOT VIRTUALIZED:
+
+
+VIRTUALIZED:
+
+
+##################################
+
+########### 18 March 2025 (Debug Build) ###########
 
 NOT VIRTUALIZED:
 Benchmarking AES-CBC-256 with 1000000 blocks of 1024 bytes each

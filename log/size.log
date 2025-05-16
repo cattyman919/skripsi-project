@@ -1,6 +1,37 @@
-########### 18 March 2025 ###########
+########### 16 May 2025 (Release Build) ###########
 
 NOT VIRTUALIZED:
+
+quick_sort : KB
+encryption : KB
+size       :  KB 
+console    : KB
+console_cloud : KB
+app_imgui  :  KB
+app_imgui_cloud :  KB
+app_qt     : KB 
+app_qt_cloud  : KB
+Lilith_Client : KB
+
+VIRTUALIZED:
+
+quick_sort :  KB
+encryption :  KB
+size       :  KB 
+console    :  KB
+console_cloud :  KB
+app_imgui  :  KB
+app_imgui_cloud :  KB
+app_qt     :  KB
+app_qt_cloud  :  KB
+Lilith_Client :  KB
+
+##################################
+
+########### 18 March 2025 (Debug Build) ###########
+
+NOT VIRTUALIZED:
+
 quick_sort : 119 KB
 encryption : 131 KB 
 size       : 97,802 KB 
@@ -9,6 +40,7 @@ app_imgui  : 1,773 KB
 app_qt     : 145 KB
 
 VIRTUALIZED:
+
 quick_sort : 1,951 KB
 encryption : 1,834 KB 
 size       : 112,716 KB 

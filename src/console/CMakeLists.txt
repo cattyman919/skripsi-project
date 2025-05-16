@@ -1,59 +1,16 @@
-set(TARGET_NAME "console")
+include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/deps) # For nlohmann/json if used by cloud.hpp
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${TARGET_NAME}/${CMAKE_BUILD_TYPE}")
+set(CONSOLE_RC_FILE ${CMAKE_SOURCE_DIR}/public/resources/app.rc) # or console.rc if specific
+set(CONSOLE_DEFINITIONS "SOURCE_ROOT=${CMAKE_SOURCE_DIR}")
 
-include_directories(${TARGET_NAME} PRIVATE
-    ${CMAKE_SOURCE_DIR}/deps
+add_project_executables(console
+    OUTPUT_SUBDIR console
+    SOURCES console.cpp
+    CLOUD_SOURCES console_cloud.cpp
+    RC_FILE ${CONSOLE_RC_FILE}
+    DEFINITIONS ${CONSOLE_DEFINITIONS}
+    NON_VM_LIBS # No specific non-VM libs beyond standard
+    VM_LIBS vxlib64
+    CLOUD_NON_VM_LIBS libcurl
+    CLOUD_VM_LIBS vxlib64 libcurl
 )
-
-add_executable(${TARGET_NAME})
-add_executable(${TARGET_NAME}_cloud)
-
-target_compile_definitions(${TARGET_NAME} PRIVATE
-  "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
-)
-
-target_compile_definitions(${TARGET_NAME}_cloud PRIVATE
-  "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
-)
-
-target_sources(${TARGET_NAME} PRIVATE
-        console.cpp
-        ${CMAKE_SOURCE_DIR}/public/resources/app.rc
-)
-
-target_sources(${TARGET_NAME}_cloud PRIVATE
-        console_cloud.cpp
-        ${CMAKE_SOURCE_DIR}/public/resources/app.rc
-)
-
-target_link_libraries(${TARGET_NAME} PRIVATE 
-    vxlib64
-)
-
-target_link_libraries(${TARGET_NAME}_cloud PRIVATE 
-    vxlib64
-    libcurl
-)
-
-if(USE_VL_MACRO)
-  set_target_properties(${TARGET_NAME} PROPERTIES
-    CXX_EXTENSIONS OFF
-    OUTPUT_NAME "${TARGET_NAME}_vm"
-  )
-
-  set_target_properties(${TARGET_NAME}_cloud PROPERTIES
-    CXX_EXTENSIONS OFF
-    OUTPUT_NAME "${TARGET_NAME}_cloud_vm"
-  )
-else()
-  set_target_properties(${TARGET_NAME} PROPERTIES
-    CXX_EXTENSIONS OFF
-    OUTPUT_NAME "${TARGET_NAME}"
-  )
-
-  set_target_properties(${TARGET_NAME}_cloud PROPERTIES
-    CXX_EXTENSIONS OFF
-    OUTPUT_NAME "${TARGET_NAME}_cloud"
-)
-endif()

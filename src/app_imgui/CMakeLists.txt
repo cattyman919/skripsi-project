@@ -1,85 +1,45 @@
-set(TARGET_NAME "app_imgui")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${TARGET_NAME}/${CMAKE_BUILD_TYPE}")
-
 find_package(OpenGL REQUIRED)
 
-include_directories(${TARGET_NAME} PRIVATE
+include_directories(PRIVATE
     ${CMAKE_SOURCE_DIR}/deps
     ${CMAKE_SOURCE_DIR}/deps/imgui
     ${CMAKE_SOURCE_DIR}/deps/imgui/backends
 )
 
-# Define a variable for the source files that are common to both executables
-set(COMMON_APP_SOURCES
+# Shared ImGui sources (compiled once per executable effectively, or put in a static lib)
+file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS
+    "${CMAKE_SOURCE_DIR}/deps/imgui/*.cpp"
+    "${CMAKE_SOURCE_DIR}/deps/imgui/backends/imgui_impl_glfw.cpp"
+    "${CMAKE_SOURCE_DIR}/deps/imgui/backends/imgui_impl_opengl3.cpp"
+)
+# If you want to ensure ImGui is compiled truly once, make it a static library:
+# add_library(imgui_custom STATIC ${VAR_SOURCES_DEPS})
+# target_include_directories(imgui_custom PUBLIC
+#     ${CMAKE_SOURCE_DIR}/deps/imgui
+#     ${CMAKE_SOURCE_DIR}/deps/imgui/backends
+# )
+# And then link against imgui_custom instead of adding VAR_SOURCES_DEPS to executables.
+# For simplicity here, we'll add sources directly. CMake/Ninja will optimize if flags are same.
+
+set(COMMON_APP_IMGUI_SOURCES
     main.cpp
-    helper.cpp
-    ${CMAKE_SOURCE_DIR}/public/resources/app.rc # resource file source
+    helper.cpp # Does not use VL_MACRO, can be shared
+    ${VAR_SOURCES_DEPS} # ImGui sources
 )
 
-# Find the dependency sources (assuming these are needed by both login implementations)
-file(GLOB_RECURSE VAR_SOURCES_DEPS CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/deps/*.cpp)
+set(APP_IMGUI_RC_FILE ${CMAKE_SOURCE_DIR}/public/resources/app.rc)
+set(APP_IMGUI_DEFINITIONS "SOURCE_ROOT=${CMAKE_SOURCE_DIR}")
 
-# --- Define the first executable (Standard Login) ---
-add_executable(${TARGET_NAME}
-    ${COMMON_APP_SOURCES}
-    login.cpp # Specific source file for this executable
-    ${VAR_SOURCES_DEPS} # Include dependency sources
+add_project_executables(app_imgui
+    IS_GUI_APP
+    OUTPUT_SUBDIR app_imgui
+    COMMON_SOURCES ${COMMON_APP_IMGUI_SOURCES}
+    SOURCES login.cpp # Specific: uses VL_MACRO
+    CLOUD_SOURCES login_cloud.cpp # Specific: uses VL_MACRO
+    RC_FILE ${APP_IMGUI_RC_FILE}
+    DEFINITIONS ${APP_IMGUI_DEFINITIONS}
+    NON_VM_LIBS glfw3 OpenGL::GL
+    VM_LIBS glfw3 OpenGL::GL vxlib64
+    CLOUD_NON_VM_LIBS glfw3 OpenGL::GL libcurl
+    CLOUD_VM_LIBS glfw3 OpenGL::GL vxlib64 libcurl
 )
-
-# --- Define the second executable (Cloud Login) ---
-add_executable(${TARGET_NAME}_cloud
-    ${COMMON_APP_SOURCES}
-    login_cloud.cpp # Specific source file for this executable
-    ${VAR_SOURCES_DEPS} # Include dependency sources
-)
-
-# Compile Definitions (applied to both targets)
-target_compile_definitions(${TARGET_NAME} PRIVATE
-    "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
-)
-target_compile_definitions(${TARGET_NAME}_cloud PRIVATE
-    "SOURCE_ROOT=${CMAKE_SOURCE_DIR}"
-)
-
-# Linked Libraries (applied to both targets)
-target_link_libraries(${TARGET_NAME} PRIVATE
-    glfw3
-    OpenGL::GL 
-    vxlib64    
-)
-
-target_link_libraries(${TARGET_NAME}_cloud PRIVATE
-    glfw3
-    OpenGL::GL
-    vxlib64
-    libcurl
-)
-
-set_target_properties(${TARGET_NAME} PROPERTIES
-    CXX_EXTENSIONS OFF
-    LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup" # Windows-specific
-)
-
-set_target_properties(${TARGET_NAME}_cloud PROPERTIES
-    CXX_EXTENSIONS OFF
-    LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup" # Windows-specific
-)
-
-if(USE_VL_MACRO)
-  set_target_properties(${TARGET_NAME} PROPERTIES
-        OUTPUT_NAME "${TARGET_NAME}_vm"
-  )
-  set_target_properties(${TARGET_NAME}_cloud PROPERTIES
-        OUTPUT_NAME "${TARGET_NAME}_cloud_vm" # Maybe add "_cloud" to the output name
-  )
-
-else()
-  set_target_properties(${TARGET_NAME} PROPERTIES
-        OUTPUT_NAME "${TARGET_NAME}"
-  )
-  
-  set_target_properties(${TARGET_NAME}_cloud PROPERTIES
-        OUTPUT_NAME "${TARGET_NAME}_cloud"
-  )
-endif()
-
