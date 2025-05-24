@@ -1,0 +1,199 @@
+########### 24 May 2025 ###########
+
+app_imgui (Non-Virtualized):
+Memory Blocks: 9
+Instructions: 246329
+Defined Data: 11485
+Functions : 3005
+Symbols : 33620
+Data Types : 420
+Data Categories : 24
+
+app_imgui (Virtualized):
+Memory Blocks: 11
+Instructions: 157
+Defined Data: 210
+Functions : 25
+Symbols : 98
+Data Types : 87
+Data Categories : 12
+
+app_imgui_cloud (Non-Virtualized):
+Memory Blocks: 9
+Instructions: 278461
+Defined Data: 13249
+Functions : 4063
+Symbols : 42807
+Data Types : 442
+Data Categories : 24
+
+app_imgui_cloud (Virtualized):
+Memory Blocks: 11
+Instructions: 180
+Defined Data: 219
+Functions : 25
+Symbols : 117
+Data Types : 86
+Data Categories : 12
+
+app_qt (Non-Virtualized):
+Memory Blocks: 9
+Instructions: 6104
+Defined Data: 1578
+Functions : 538
+Symbols : 2113
+Data Types : 366
+Data Categories : 24
+
+app_qt (Virtualized):
+Memory Blocks: 11
+Instructions: 214
+Defined Data: 174
+Functions : 25
+Symbols : 103
+Data Types : 68
+Data Categories : 8
+
+app_qt_cloud (Non-Virtualized):
+Memory Blocks: 9
+Instructions: 39844
+Defined Data: 3416
+Functions : 1700
+Symbols : 11920
+Data Types : 399
+Data Categories : 25
+
+app_qt_cloud (Virtualized):
+Memory Blocks: 11
+Instructions: 163
+Defined Data: 210
+Functions : 24
+Symbols : 127
+Data Types : 69
+Data Categories : 8
+
+console (Non-Virtualized):
+Memory Blocks: 8
+Instructions: 3090
+Defined Data: 726
+Functions : 261
+Symbols : 1018
+Data Types : 234
+Data Categories : 18
+
+console (Virtualized):
+Memory Blocks: 10
+Instructions: 174
+Defined Data: 146
+Functions : 20
+Symbols : 88
+Data Types : 60
+Data Categories : 9
+
+console_cloud (Non-Virtualized):
+Memory Blocks: 8
+Instructions: 36024
+Defined Data: 2556
+Functions : 1370
+Symbols : 10529
+Data Types : 277
+Data Categories : 18
+
+console_cloud (Virtualized):
+Memory Blocks: 10
+Instructions: 167
+Defined Data: 173
+Functions : 20
+Symbols : 81
+Data Types : 66
+Data Categories : 9
+
+encryption (Non-Virtualized):
+Memory Blocks: 8
+Instructions: 6282
+Defined Data: 849
+Functions : 368
+Symbols : 1920
+Data Types : 228
+Data Categories : 17
+
+encryption (Virtualized):
+Memory Blocks: 10
+Instructions: 159
+Defined Data: 155
+Functions : 20
+Symbols : 77
+Data Types : 62
+Data Categories : 9
+
+JuicyPotato (Non-Virtualized):
+Memory Blocks: 9
+Instructions: 5178
+Defined Data: 955
+Functions : 338
+Symbols : 1729
+Data Types : 450
+Data Categories : 22
+
+JuicyPotato (Virtualized):
+Memory Blocks: 10
+Instructions: 198
+Defined Data: 174
+Functions : 22
+Symbols : 112
+Data Types : 94
+Data Categories : 12
+
+Lilith_Client (Non-Virtualized):
+Memory Blocks: 8
+Instructions: 11384
+Defined Data: 1539
+Functions : 654
+Symbols : 3500
+Data Types : 332
+Data Categories : 27
+
+Lilith_Client (Virtualized):
+Memory Blocks: 19
+Instructions: 214
+Defined Data: 184
+Functions : 26
+Symbols : 96
+Data Types : 79
+Data Categories : 15
+
+quick_sort (Non-Virtualized):
+Memory Blocks: 8
+Instructions: 4370
+Defined Data: 700
+Functions : 311
+Symbols : 1472
+Data Types : 229
+Data Categories : 17
+
+quick_sort (Virtualized):
+Memory Blocks: 10
+Instructions: 265
+Defined Data: 146
+Functions : 20
+Symbols : 109
+Data Types : 60
+Data Categories : 9
+
+size (Non-Virtualized):
+Memory Blocks: 9
+Instructions: 698
+Defined Data: 936
+Functions : 419
+Symbols : 2342
+Data Types : 277
+Data Categories : 18
+
+size (Virtualized):
+Memory Blocks: 11
+Instructions: 214
+Defined Data: 155
+Functions : 23
+Symbols : 96
+Data Types : 68
+Data Categories : 10

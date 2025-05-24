@@ -4,3 +4,4 @@ dummy.bin
 .*
 !.gitignore
 repomix-output.xml
+*.json

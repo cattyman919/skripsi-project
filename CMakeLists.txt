@@ -9,7 +9,8 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # Aggressive Optimization to More Optimization O3 -> O2
-string(REPLACE "-O3" "-O2" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+string(REPLACE "-O3" "-O0" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+string(REPLACE "-O2" "-O0" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 
 set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "")
 set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/pdb/${CMAKE_BUILD_TYPE})
@@ -132,5 +133,6 @@ add_subdirectory(src/app_imgui)
 add_subdirectory(src/app_qt)
 add_subdirectory(src/console)
 add_subdirectory(src/performance)
-add_subdirectory(src/Lilith/client)
-add_subdirectory(src/Lilith/server)
+add_subdirectory(src/malwares/Lilith/client)
+add_subdirectory(src/malwares/Lilith/server)
+add_subdirectory(src/malwares/JuicyPotato)

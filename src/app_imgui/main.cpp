@@ -62,6 +62,7 @@ int main() {
   // Default ImGui Style & Fonts
   ImGui::SetupImGuiStyle(io, true, 1);
 
+
   while (!glfwWindowShouldClose(ImGui::window)) {
     glfwPollEvents();
 
@@ -83,6 +84,7 @@ int main() {
 
     glfwSwapBuffers(ImGui::window);
   }
+
 
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();

@@ -1,0 +1,131 @@
+app_imgui (Non-VM) 
+Instruction Count: 259046
+Memory Section: 7
+Defined Symbols: 251
+Key Strings Found: Yes
+
+app_imgui (VM) 
+Instruction Count: 258923
+Memory Section: 10
+Defined Symbols: 19
+Key Strings Found: No
+
+app_imgui_cloud (Non-VM) 
+Instruction Count: 296024
+Memory Section: 7
+Defined Symbols: 266
+Key Strings Found: Yes
+
+app_imgui_cloud (VM) 
+Instruction Count: 295890
+Memory Section: 10
+Defined Symbols: 20
+Key Strings Found: No
+
+app_qt (Non-VM) 
+Instruction Count: 8022
+Memory Section: 7
+Defined Symbols: 209
+Key Strings Found: Yes
+
+app_qt (VM) 
+Instruction Count: 8011
+Memory Section: 10
+Defined Symbols: 15
+Key Strings Found: No
+
+app_qt_cloud (Non-VM) 
+Instruction Count: 49692
+Memory Section: 7
+Defined Symbols: 231
+Key Strings Found: Yes
+
+app_qt_cloud (VM) 
+Instruction Count: 49744
+Memory Section: 10
+Defined Symbols: 19
+Key Strings Found: No
+
+console (Non-VM) 
+Instruction Count: 5797
+Memory Section: 6
+Defined Symbols: 88
+Key Strings Found: Yes
+
+console (VM) 
+Instruction Count: 5843
+Memory Section: 9
+Defined Symbols: 12
+Key Strings Found: No
+
+console_cloud (Non-VM) 
+Instruction Count: 44223
+Memory Section: 6
+Defined Symbols: 110
+Key Strings Found: Yes
+
+console_cloud (VM) 
+Instruction Count: 44169
+Memory Section: 9
+Defined Symbols: 15
+Key Strings Found: NO
+
+encryption (Non-VM) 
+Instruction Count: 8336
+Memory Section: 6
+Defined Symbols: 94
+Key Strings Found: Yes
+
+encryption (VM) 
+Instruction Count: 8207
+Memory Section: 9
+Defined Symbols: 13
+Key Strings Found: No
+
+JuicyPotato (Non-VM) 
+Instruction Count: 6780
+Memory Section: 7
+Defined Symbols: 109
+Key Strings Found: Yes
+
+JuicyPotato (VM) 
+Instruction Count: 6644
+Memory Section: 9
+Defined Symbols: 17
+Key Strings Found: No
+
+Lilith_Client (Non-VM) 
+Instruction Count: 16223
+Memory Section: 6
+Defined Symbols: 184
+Key Strings Found: Yes
+
+Lilith_Client (VM) 
+Instruction Count: 16355
+Memory Section: 9
+Defined Symbols: 18
+Key Strings Found: No
+
+quick_sort (Non-VM) 
+Instruction Count: 6580
+Memory Section: 6
+Defined Symbols: 83
+Key Strings Found: Yes
+
+quick_sort (VM) 
+Instruction Count: 6492
+Memory Section: 9
+Defined Symbols: 12
+Key Strings Found: No
+
+size (Non-VM) 
+Instruction Count: 9948
+Memory Section: 7
+Defined Symbols: 95
+Key Strings Found: Yes
+
+size (VM) 
+Instruction Count: 9870
+Memory Section: 10
+Defined Symbols: 12
+Key Strings Found: No

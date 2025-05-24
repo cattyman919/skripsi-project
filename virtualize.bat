@@ -10,10 +10,11 @@ set target[2]=console
 set target[3]=encryption
 set target[4]=Lilith_Client
 set target[5]=quick_sort
-set target[6]=size
+set target[6]=JuicyPotato
+set target[7]=size
 
 echo.
-for /l %%i in (0,1,6) do (
+for /l %%i in (0,1,7) do (
   set "target_path=bin\\!target[%%i]!\\!build_type!\\!target[%%i]!"
 
   echo Virtualizing !target[%%i]!
